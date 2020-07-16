@@ -1,0 +1,28 @@
+{
+  "name": "game-srcaper",
+  "version": "0.0.1",
+  "description": "EsPa official game scraper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agilepoodle/game-srcaper.git"
+  },
+  "keywords": [
+    "EsPa",
+    "Palloliitto",
+    "Game",
+    "Scraper"
+  ],
+  "author": "Jussi Mononen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agilepoodle/game-srcaper/issues"
+  },
+  "homepage": "https://github.com/agilepoodle/game-srcaper#readme",
+  "dependencies": {
+    "cheerio": "1.0.0-rc.3"
+  }
+}
