@@ -1,0 +1,1 @@
+aws lambda update-function-code --region eu-north-1 --function-name espaGames --zip-file fileb://./espa-games.zip
