@@ -7,7 +7,6 @@ const baseUrl = 'https://palloliitto.fi';
 const getGames = async () => {
     console.log('Fetching games and parsing...');
     const response = await got('https://www.palloliitto.fi/seura/169');
-    let body = '';
     const games = [];
     const $ = cheerio.load(response.body);
     $('.match-row').each( (i, row) => {
@@ -19,7 +18,6 @@ const getGames = async () => {
         game.link = baseUrl + $(row).find('.live-match-link > a').attr('href');
         games.push(game);
     });
-    //console.log(games);
     return {
         html: formatOutput(games),
         json: games
@@ -65,22 +63,19 @@ const exec = async () => {
 exec();
 
 exports.handler = async (event) => {
-    let responseCode = 200;
-
     const games = await getGames();
-
-    let responseBody = {
-        html: formatOutput(games),
-        json: games
-    };
-
     let response = {
-        statusCode: responseCode,
+        statusCode: 200,
         headers: {
-            "x-custom-header" : "x-espa-games-data"
-        },
-        body: JSON.stringify(responseBody)
+           "x-custom-header" : "x-espa-games-data"
+        }
     };
-    console.log("response: " + JSON.stringify(response))
-    return response;
+
+    if(event.queryStringParameters && event.queryStringParameters.json) {
+        response.body = JSON.stringify(games);
+    } else {
+        response.body = formatOutput(games);
+    }
+    console.log("response: ", response);
+    return response;    
 };
