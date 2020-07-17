@@ -35,7 +35,7 @@ const formatOutput = (data) => {
             <li><a href="${g.link}">Ottelun tiedot</a></li>
           </ul>
         `;
-    });
+    }).join('\n');
 
     return `<html lang="en">
     <head>
@@ -43,12 +43,9 @@ const formatOutput = (data) => {
       <title>EsPa Games</title>
       <meta name="description" content="EsPa Games">
       <meta name="author" content="EsPa/JMo">
-      <link rel="stylesheet" href="css/styles.css?v=1.0">
     </head>
     <body>
-        <ul>
-          <li>${html}</li>
-        </ul>
+        ${html}
     </body>
     </html>`;
 
@@ -67,14 +64,17 @@ exports.handler = async (event) => {
     let response = {
         statusCode: 200,
         headers: {
-           "x-custom-header" : "x-espa-games-data"
+           'x-custom-header' : 'x-espa-games-data',
+           'Content-Type' : 'text/html'
         }
     };
 
     if(event.queryStringParameters && event.queryStringParameters.json) {
-        response.body = JSON.stringify(games);
+        console.log('JSON requested');
+        response.body = JSON.stringify(games.json);
+        response.headers['Content-Type'] = 'application/json';
     } else {
-        response.body = formatOutput(games);
+        response.body = games.html;
     }
     console.log("response: ", response);
     return response;    
