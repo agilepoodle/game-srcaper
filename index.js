@@ -47,7 +47,7 @@ const parseGamesFromHtmlBody = (body) => {
 }
 
 const parseTimeToMoment = (matchTime) => {
-    const date_re = /(\d+)\.(\d+)\.\s+(\d+:\d+)/;
+    const date_re = /(\d+)\.(\d+)\.?(\d{0,4})\s+(\d+:\d+)/;
     const todays_game_re = /\.*klo\s+(\d+:\d+)/i;
     const tomorrows_game_re = /\.*huomenna\s+(\d+:\d+)/i;
     const currentMonth = moment().month();
@@ -56,7 +56,7 @@ const parseTimeToMoment = (matchTime) => {
 
     const dateMatch = matchTime.match(date_re);
     console.log('orig match time', matchTime);
-    console.log('match', dateMatch);
+    console.log('orig match date', dateMatch);
 
     if(matchTime.match(/klo/i)) { // Game is today
         gameDay = moment().date();
@@ -66,12 +66,13 @@ const parseTimeToMoment = (matchTime) => {
         gameDay = moment().add(1, 'days').date();
         gameMonth = dateMatch[2];
         gameTime = matchTime.match(tomorrows_game_re)[1];
-    }else {
+    } else {
         gameDay = dateMatch[1] < 10 ? `0${dateMatch[1]}` : dateMatch[1];
         gameMonth = dateMatch[2] < 10 ? `0${dateMatch[2]}` : dateMatch[2];
-        gameTime = dateMatch[3];
+        gameYear = dateMatch[3];
+        gameTime = dateMatch[4];
     }
-    gameYear = gameMonth < currentMonth ? moment().add(1, 'year').year() : moment().year();
+    gameYear = gameYear ? gameYear : moment().year();
     return moment(`${gameYear}-${gameMonth}-${gameDay} ${gameTime}`);
 };
 
