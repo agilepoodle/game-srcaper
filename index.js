@@ -115,8 +115,11 @@ exports.handler = async (event) => {
     let response = {
         statusCode: 200,
         headers: {
-           'x-custom-header' : 'x-espa-games-data',
-           'Content-Type' : 'text/html'
+            'x-custom-header' : 'x-espa-games-data',
+            'Content-Type' : 'text/html',
+            'Access-Control-Allow-Headers' : 'Content-Type',
+            'Access-Control-Allow-Origin': 'https://www.example.com',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         }
     };
 
