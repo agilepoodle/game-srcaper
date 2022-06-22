@@ -24,7 +24,7 @@
   "homepage": "https://github.com/agilepoodle/game-srcaper#readme",
   "dependencies": {
     "cheerio": "1.0.0-rc.3",
-    "got": "11.5.1",
+    "got": "11.8.5",
     "lodash": "4.17.19",
     "moment": "2.27.0"
   }
